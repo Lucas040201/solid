@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tb_shopkeeper', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->uuid()->unique();
+            $table->string('name', 50);
+            $table->string('surname', 50);
+            $table->string('email', 150)->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('document_id');
             $table->timestamps();
+
+            $table->foreign('document_id')->references('id')->on('tb_document')->onDelete('cascade');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tb_shopkeeper');
     }
 };
