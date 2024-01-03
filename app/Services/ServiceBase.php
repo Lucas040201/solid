@@ -23,4 +23,9 @@ abstract class ServiceBase implements ServiceContract
     {
         return $this->repository->index();
     }
+
+    public function findBy(string $search, string|int $param)
+    {
+        return $this->repository->findBy($search, $param);
+    }
 }

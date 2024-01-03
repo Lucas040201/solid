@@ -24,4 +24,9 @@ abstract class RepositoryBase implements RepositoryContract
         return $this->model->all()->toArray();
     }
 
+    public function findBy(string $search, string|int $param)
+    {
+        return $this->model::where($search, $param)->first();
+    }
+
 }
