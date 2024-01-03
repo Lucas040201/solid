@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'customer',
+        'passwords' => 'customer',
     ],
 
     /*
@@ -36,9 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+        'customer' => [
+            'driver' => 'passport',
+            'provider' => 'customer',
+        ],
+        'shopkeeper' =>             [
+            'driver' => 'passport',
+            'provider' => 'shopkeeper',
         ],
     ],
 
@@ -60,9 +64,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'customer' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Customer::class,
+        ],
+        'shopkeeper' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Shopkeeper::class,
         ],
 
         // 'users' => [
@@ -91,11 +99,15 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
+        'customer' => [
+            'provider' => 'customer',
+            'table' => 'password_resets',
             'expire' => 60,
-            'throttle' => 60,
+        ],
+        'shopkeeper' => [
+            'provider' => 'shopkeeper',
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 
