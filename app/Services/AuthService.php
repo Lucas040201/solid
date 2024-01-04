@@ -27,7 +27,7 @@ class AuthService
         }
 
         if (Hash::check($data['password'], $user->password)) {
-            return $user->createToken($provider)->accessToken;
+            return $user->createToken($provider)->plainTextToken;
         }
 
         throw new WrongCredentialsException();
