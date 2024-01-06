@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Enums\UserProvider;
-use App\Exceptions\ProviderNotFoundException;
+use App\Exceptions\UserTypeNotFoundException;
 use App\Exceptions\WrongCredentialsException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
