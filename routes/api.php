@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use \App\Http\Controllers\Api\AuthController;
@@ -26,7 +25,7 @@ Route::prefix('user')->group(function() {
 
 Route::prefix('auth')->group(function() {
    Route::controller(AuthController::class)->group(function () {
-      Route::post('/{provider}', 'login');
+        Route::middleware('auth:sanctum')->get('/me', 'currentUser');
         Route::post('/{userType}', 'login');
    });
 });

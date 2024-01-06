@@ -51,6 +51,11 @@ class Shopkeeper extends Authenticatable implements UserContract
 
     public function document()
     {
-        return $this->belongsTo(Document::class, 'document_id');
+        return $this->belongsTo(Document::class, 'document_id')->first();
+    }
+
+    public function getNameFullName(): string
+    {
+        return "{$this->name} {$this->surname}";
     }
 }

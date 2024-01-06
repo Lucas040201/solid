@@ -31,4 +31,17 @@ class AuthController extends Controller
             ], $exception->getCode());
         }
     }
+
+    public function currentUser()
+    {
+        try {
+            return $this->authService->currentUser();
+        } catch (Exception $exception) {
+            return response([
+                'error' => [
+                    'message' => $exception->getMessage()
+                ]
+            ], $exception->getCode());
+        }
+    }
 }

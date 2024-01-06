@@ -4,7 +4,8 @@ namespace App\Services;
 
 use App\Exceptions\UserTypeNotFoundException;
 use App\Exceptions\WrongCredentialsException;
-use Illuminate\Support\Facades\App;
+use App\Utils\GetUserTypeService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -33,17 +34,15 @@ class AuthService
     }
 
 
-    /**
-     * @throws ProviderNotFoundException
-     */
-    private function getProvider(string $provider)
+    public function currentUser()
     {
-        return match ($provider) {
-            UserProvider::customer->value => App::make(CustomerService::class),
-            UserProvider::shopkeeper->value => App::make(ShopkeeperService::class),
-            default => throw new ProviderNotFoundException()
-        };
+        $user = Auth::user();
+        return [
+            'uuid' => $user->uuid,
+            'name' => $user->getNameFullName(),
+            'document' => $user->document()->document,
+            'email' => $user->email
+        ];
     }
-
-
 }
+
