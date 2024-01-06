@@ -85,4 +85,34 @@ class AuthControllerTest extends TestCase
             $json->whereType('token', 'string');
         });
     }
+
+    public function test_current_user_unauthorized(): void
+    {
+        $response = $this->get('/api/auth/me', [
+            'accept' => 'application/json'
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_current_user_customer(): void
+    {
+        $user = Customer::factory()->create()->first();
+        $token = $user->createToken('customer')->plainTextToken;
+        $response = $this->get('/api/auth/me', [
+            'accept' => 'application/json',
+            'authorization' => "Bearer {$token}"
+        ]);
+        $response->assertStatus(200);
+    }
+
+    public function test_current_user_shopkeeper(): void
+    {
+        $user = Shopkeeper::factory()->create()->first();
+        $token = $user->createToken('shopkeeper')->plainTextToken;
+        $response = $this->get('/api/auth/me', [
+            'accept' => 'application/json',
+            'authorization' => "Bearer {$token}"
+        ]);
+        $response->assertStatus(200);
+    }
 }
