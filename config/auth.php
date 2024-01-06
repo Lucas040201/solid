@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'customer',
+        'guard' => 'web',
         'passwords' => 'customer',
     ],
 
@@ -36,12 +36,16 @@ return [
     */
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'customer',
+        ],
         'customer' => [
-            'driver' => 'passport',
+            'driver' => 'sanctum',
             'provider' => 'customer',
         ],
         'shopkeeper' =>             [
-            'driver' => 'passport',
+            'driver' => 'sanctum',
             'provider' => 'shopkeeper',
         ],
     ],

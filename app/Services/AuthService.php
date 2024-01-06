@@ -13,12 +13,12 @@ class AuthService
 
     /**
      * @throws WrongCredentialsException
-     * @throws ProviderNotFoundException
+     * @throws UserTypeNotFoundException
      */
-    public function login(array $data, string $provider)
+    public function login(array $data, string $userType)
     {
 
-        $serviceProvider = $this->getProvider($provider);
+        $serviceProvider = GetUserTypeService::getService($userType);
 
         $user = $serviceProvider->findBy('email', $data['email']);
 
@@ -27,7 +27,7 @@ class AuthService
         }
 
         if (Hash::check($data['password'], $user->password)) {
-            return $user->createToken($provider)->plainTextToken;
+            return $user->createToken($userType)->plainTextToken;
         }
 
         throw new WrongCredentialsException();
