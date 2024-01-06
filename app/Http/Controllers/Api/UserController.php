@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\ProviderNotFoundException;
+use App\Exceptions\UserTypeNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Services\UserService;
@@ -29,7 +29,7 @@ class UserController extends Controller
                 'id' => $user->uuid->toString()
             ]);
 
-        } catch (ProviderNotFoundException|Exception $exception) {
+        } catch (UserTypeNotFoundException|Exception $exception) {
             return response([
                 'error' => [
                     'message' => $exception->getMessage()

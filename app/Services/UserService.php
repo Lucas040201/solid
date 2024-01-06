@@ -3,43 +3,44 @@
 namespace App\Services;
 
 use App\Enums\UserProvider;
-use App\Exceptions\ProviderNotFoundException;
+use App\Exceptions\UserTypeNotFoundException;
 use App\Models\Contracts\UserContract;
+use App\Utils\GetUserTypeService;
 use Illuminate\Support\Facades\App;
 
 class UserService
 {
 
     /**
-     * @throws ProviderNotFoundException
+     * @throws UserTypeNotFoundException
      */
-    public function createUser(array $data, string $provider): UserContract
+    public function createUser(array $data, string $userType): UserContract
     {
-        $providerService = $this->getProvider($provider);
+        $providerService = GetUserTypeService::getService($userType);
         return $providerService->create($data);
     }
 
 
     /**
-     * @throws ProviderNotFoundException
+     * @throws UserTypeNotFoundException
      */
     private function getProvider(string $provider)
     {
         return match ($provider) {
             UserProvider::customer->value => App::make(CustomerService::class),
             UserProvider::shopkeeper->value => App::make(ShopkeeperService::class),
-            default => throw new ProviderNotFoundException()
+            default => throw new UserTypeNotFoundException()
         };
     }
 
 
     /**
-     * @throws ProviderNotFoundException
+     * @throws UserTypeNotFoundException
      */
     public function index(): array
     {
-        $customerService = $this->getProvider(UserProvider::customer->value);
-        $shopkeeperService = $this->getProvider(UserProvider::shopkeeper->value);
+        $customerService = GetUserTypeService::getService(UserProvider::customer->value);
+        $shopkeeperService = GetUserTypeService::getService(UserProvider::shopkeeper->value);
 
         return array_merge(
             $customerService->index(),

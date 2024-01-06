@@ -12,7 +12,7 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_with_wrong_provider(): void
+    public function test_login_with_wrong_user_type(): void
     {
         $payload = [
             'email' => 'lucas@yopmail.com',
@@ -25,7 +25,7 @@ class AuthControllerTest extends TestCase
 
         $response->assertJson(function (AssertableJson $json) {
             $json->whereType('error.message', 'string');
-            $json->where('error.message', 'The provided provider was not found');
+            $json->where('error.message', 'The provided user type was not found');
         });
     }
 

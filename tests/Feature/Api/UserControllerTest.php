@@ -51,7 +51,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_dont_create_user_when_provider_is_not_found(): void
+    public function test_dont_create_user_when_user_type_is_not_found(): void
     {
         $payload = [
             'name' => 'lucas',
@@ -65,7 +65,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(404);
         $response->assertJson(function (AssertableJson $json) {
             $json->whereType('error.message', 'string');
-            $json->where('error.message', 'The provided provider was not found');
+            $json->where('error.message', 'The provided user type was not found');
         });
     }
 

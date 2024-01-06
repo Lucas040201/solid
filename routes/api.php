@@ -16,13 +16,10 @@ use \App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::prefix('user')->group(function() {
    Route::controller(UserController::class)->group(function() {
-       Route::post('/{provider}', 'create');
+       Route::post('/{userType}', 'create');
        Route::get('/', 'index');
    });
 });
@@ -30,5 +27,6 @@ Route::prefix('user')->group(function() {
 Route::prefix('auth')->group(function() {
    Route::controller(AuthController::class)->group(function () {
       Route::post('/{provider}', 'login');
+        Route::post('/{userType}', 'login');
    });
 });

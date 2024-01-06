@@ -17,11 +17,11 @@ class AuthController extends Controller
     {
     }
 
-    public function login(LoginRequest $request, string $provider)
+    public function login(LoginRequest $request, string $userType)
     {
         try {
             return [
-                'token' =>$this->authService->login($request->validated(), $provider),
+                'token' =>$this->authService->login($request->validated(), $userType),
             ];
         } catch (WrongCredentialsException|Exception $exception) {
             return response([
