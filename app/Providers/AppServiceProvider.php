@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\CustomerRepository;
 use App\Repositories\ShopkeeperRepository;
+use App\Repositories\TransactionRepository;
 use App\Services\CustomerService;
 use App\Services\ShopkeeperService;
+use App\Services\TransactionService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 
@@ -30,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ShopkeeperService::class, function(Application $app) {
             return new ShopkeeperService($app->make(ShopkeeperRepository::class));
+        });
+
+        $this->app->bind(TransactionService::class, function(Application $app) {
+            return new TransactionService($app->make(TransactionRepository::class));
         });
     }
 }
