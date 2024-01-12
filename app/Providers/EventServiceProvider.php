@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Models\Customer;
 use App\Models\Shopkeeper;
+use App\Models\Transaction;
+use App\Models\Wallet;
 use App\Observers\UserObserver;
+use App\Observers\UuidObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,8 @@ class EventServiceProvider extends ServiceProvider
     {
         Customer::observe(UserObserver::class);
         Shopkeeper::observe(UserObserver::class);
+        Wallet::observe(UuidObserver::class);
+        Transaction::observe(UuidObserver::class);
     }
 
     /**
