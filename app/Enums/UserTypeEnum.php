@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum UserProvider: string
+enum UserTypeEnum: string
 {
     case customer = 'customer';
     case shopkeeper = 'shopkeeper';

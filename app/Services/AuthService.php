@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\UserTypeNotFoundException;
 use App\Exceptions\WrongCredentialsException;
-use App\Utils\GetUserTypeService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +17,7 @@ class AuthService
     public function login(array $data, string $userType)
     {
 
-        $serviceProvider = GetUserTypeService::getService($userType);
+        $serviceProvider = UserTypeService::getService($userType);
 
         $user = $serviceProvider->findBy('email', $data['email']);
 
@@ -37,11 +36,15 @@ class AuthService
     public function currentUser()
     {
         $user = Auth::user();
+
         return [
             'uuid' => $user->uuid,
             'name' => $user->getNameFullName(),
             'document' => $user->document()->document,
-            'email' => $user->email
+            'email' => $user->email,
+            'wallet' => [
+                'balance' => $user->wallet()->first()->balance
+            ]
         ];
     }
 }
