@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Contracts\UserContract;
+use App\Models\Contracts\CustomerContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Customer extends Authenticatable implements UserContract
+class Customer extends Authenticatable implements CustomerContract
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -58,5 +58,10 @@ class Customer extends Authenticatable implements UserContract
     public function getNameFullName(): string
     {
         return "{$this->name} {$this->surname}";
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class, 'user_id', 'uuid');
     }
 }

@@ -58,4 +58,9 @@ class Shopkeeper extends Authenticatable implements UserContract
     {
         return "{$this->name} {$this->surname}";
     }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class, 'user_id', 'uuid');
+    }
 }
