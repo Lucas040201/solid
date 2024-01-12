@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use \App\Http\Controllers\Api\AuthController;
+use \App\Http\Controllers\Api\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,8 @@ Route::prefix('auth')->group(function() {
         Route::middleware('auth:sanctum')->get('/me', 'currentUser');
         Route::post('/{userType}', 'login');
    });
+});
+
+Route::prefix('transaction')->controller(TransactionController::class)->group(function () {
+   Route::post('/pay', 'pay');
 });
