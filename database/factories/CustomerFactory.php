@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserProvider;
 use App\Models\Document;
+use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
@@ -28,8 +27,14 @@ class CustomerFactory extends Factory
         $document = Document::factory()->create([
             'document' => $this->faker->cpf(false),
         ]);
+        $uuid = $this->faker->uuid();
+
+        Wallet::factory()->create([
+           'user_id' => $uuid
+        ]);
+
         return [
-            'uuid' => $this->faker->uuid(),
+            'uuid' => $uuid,
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
