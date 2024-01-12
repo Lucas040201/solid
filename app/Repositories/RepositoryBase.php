@@ -4,12 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Contracts\ModelContract;
 use App\Repositories\Contracts\RepositoryContract;
-use Illuminate\Database\Eloquent\Model;
 
 abstract class RepositoryBase implements RepositoryContract
 {
     public function __construct(
-        protected readonly Model $model
+        protected readonly ModelContract $model
     )
     {
     }
